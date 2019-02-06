@@ -5,7 +5,7 @@ description: "My personal website"
 baseurl: ""
 url: "https://jricheimer.github.io"
 title_description: "I'm a computer vision engineer foscusing on deep learning solutions to high-level visual tasks."
-title_image: "https://i.imgur.com/tq0eBfu.jpg"
+title_image: "https://i.imgur.com/70oXl2a.jpg"
 google_analytics: "UA-20365477-4"
 # disqus_account: cartenoire
 github_repository: https://github.com/jricheimer/jricheimer.github.io
