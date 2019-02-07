@@ -19,7 +19,7 @@ zero-padding is applied to the input tensor to the layer so that we can properly
 
 In general, if the spatial input size to a conv layer is `(H, W)` (let's ignore the channel dimension here for convenience) and the kernel
 size of the convolution is `(k, k)`, then without any padding involved, the output size will be `(H-k+1, W-k+1)`. Thus, if we want a
-different output size than that, we have to artificially change `H` and `W` by appending zeros onto the edges of the image - padding.
+different output size than that, we have to artificially change `H` and `W` by appending zeros onto the edges of the image. That's called padding.
 In a case where a greater-than-one stride is included, then the above output size will be divided by the stride value in each dimension. 
 
 What's interesting is that in the Tensorflow framework (and Keras as well), instead of
@@ -60,7 +60,7 @@ kernel and an even stride, you'll find most of the time the padding will be symm
 model to be used with a Tensorflow backend, instead of using just a `Conv2D` layer with `padding='same'`, use first a `ZeroPadding2D(padding=(1,1))`
 layer to imitate the padding done in the MXNet model, then apply the `Conv2D` layer with `padding='valid'`.
 
-In fact, if you use Keras for your models, and expect to be switching back and forth between backends (Keras supports Tensorflow, Theano, and CNTK backends; and there's an [open source project][2]
+In fact, if you use Keras for your models, and expect to be switching back and forth between backends (Keras supports Tensorflow, Theano, and CNTK backends; and there's a [fork of Keras][2]
 which includes a MXNet backend as well), then the safe way to apply convolutional operators is to use this method of first applying
 a `ZeroPadding2D` layer, then the `Conv2D`. That way there's no ambiguity in the padding numbers, and you can expect the results of
 inference to be the same even when switching between backends.
