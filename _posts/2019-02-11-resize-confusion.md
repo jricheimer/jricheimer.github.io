@@ -72,7 +72,7 @@ And in fact, this is exactly what `cv2.resize` returned above.
 
 Most libraries that I've encountered implement one of the above two standards. Either the direct index scaling (which I believe is what `PIL` does) or the OpenCV-style "shift-and scale" approach (which is also followed by `scikit-image`).
 
-Suppose, though, that you want to incorporate bilinear resizing (which is differentiable) in a convolutional network. This is done, for example, in the [DeepLabv3+][1] model for segmentation. (I recommend [this excellent post][2] about visualizing the difference between increasing resolution in convolutional networks via "deconvolution" layers and via resizing followed by standard convolution layers.) This can be done in Tensorflow with the `tf.image.resize_bilinear` function. Let's see what it does on our toy example from above.
+Suppose, though, that you want to incorporate bilinear resizing (which is differentiable) in a convolutional network. This is done, for example, in the [DeepLabv3+][1] model for segmentation. (I recommend [this excellent post][2] about visualizing the difference between increasing resolution in convolutional networks via "deconvolution" layers and via resizing followed by standard convolution layers.) This can be done in Tensorflow with the [`tf.image.resize_bilinear`][4] function. Let's see what it does on our toy example from above.
 
 ```python
 import tensorflow as tf
@@ -104,9 +104,9 @@ It turns out that Tensorflow, like OpenCV, tries to align the left and right edg
 
 ![alt text](https://github.com/jricheimer/jricheimer.github.io/raw/master/_data/resize3.png "Tensorflow Align Corners")
 
-Tensorflow is aligning the target's `0` with the source's `0` on the left, and also the right-most target index, `11`, is being aligned with the right-most source index, which is `5`. So, actually, in this `align_corners` mode, Tensorflow is still scaling the indeices without shifting, but they're just changing the expected scale value. To scale from size `6` to size `12` like in our example is not scaling by a factor of `2`, but rather by a factor of `11/5 = 2.2`. You can think of it as the area or "length" of the source image being scaled to the area or length of the target. In out case, the target may have 12 pixel values, or "points", but there are only 11 "units of length" between the points. The same for the source image - there are only 5 "units". So the scale factor becomes 11/5.
+Tensorflow is aligning the target's `0` with the source's `0` on the left, and also the right-most target index, `11`, is being aligned with the right-most source index, which is `5`. So, actually, in this `align_corners` mode, Tensorflow is still scaling the indices without shifting, but they're just changing the expected scale value. To scale from size `6` to size `12` like in our example is not scaling by a factor of `2`, but rather by a factor of `11/5 = 2.2`. You can think of it as the area or "length" of the source image being scaled to the area or length of the target. In out case, the target may have 12 pixel values, or "points", but there are only 11 "units of length" between the points. The same for the source image - there are only 5 "units". So the scale factor becomes 11/5.
 
-This `align_corners` is likely closer to what you want if you're resizing the feature maps in your network. However, there still doesn't seem to be a way to imitate OpenCV's resizing in Tensorflow.
+This `align_corners` is likely closer to what you want if you're resizing the feature maps in your network. However, there still doesn't seem to be a way to imitate OpenCV's resizing in Tensorflow. 
 
 To take advantage of Tensorflow's `align_corners` mode, a nice approach when enlarging an image is to make it so that `output_size-1` is divisible by `input_size-1`. That way, the scale factor becomes an integer, and this minimizes the amount of output pixels interpolated from subpixels in the source image. To try that, let's just add one to the sizes from our earlier example:
 ```python
@@ -123,6 +123,9 @@ This is a really nice property, and in fact, this is part of [the standard][3] t
 
 I've seen a lot of confusion about this scattered around online and in github issues, and I hope this clears up some of that confusion for anyone caught up in this. Our small example was just one-dimensional for simplicity's sake, but of course this extends to two dimensions trivially; the top and bottom of the image would be treated the same as the left and right.
 
+[For comparison, I quickly tried out MXNet's and PyTorch's bilinear resizing functions. MXNet's `mxnet.ndarray.contrib.BilinearResize2D` is equivalent to Tensorflow's `align_corners` standard. And PyTorch, in it's `torch.nn.Upsample(mode='bilinear')`, also includes an `align_corners` argument, which performs the same as Tensorflow when `align_corners=True`. However, interestingly, when `align_corners=False`, it performs equivalently to OpenCV's `resize` instead of mimicking Tensorflow.]
+
 [1]: https://arxiv.org/abs/1802.02611
 [2]: https://distill.pub/2016/deconv-checkerboard/
 [3]: https://github.com/tensorflow/tensorflow/issues/6720#issuecomment-298190596
+[4]: 
