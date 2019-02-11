@@ -97,8 +97,7 @@ print sess.run(tf.image.resize_bilinear(t, [1,12], align_corners=True))[0,:,:,0]
 ```
 This time, we get:
 ```
-[[0.0, 0.4545454680919647, 0.9090909361839294, 1.3636363744735718, 1.8181818723678589, 2.2727272510528564,
-  2.7272727489471436, 3.1818182468414307, 3.6363637447357178, 4.090909004211426, 4.545454502105713, 5.0]]
+[[0.0, 0.4545454680919647, 0.9090909361839294, 1.3636363744735718, 1.8181818723678589, 2.2727272510528564, 2.7272727489471436, 3.1818182468414307, 3.6363637447357178, 4.090909004211426, 4.545454502105713, 5.0]]
 ```
 
 It turns out that Tensorflow, like OpenCV, tries to align the left and right edges of the input and output images. But, *unlike* OpenCV, they don't consider the pixel values to represent the "center" of the pixel areas, i.e. they don't shift the index values by a half in their mapping. Here's what it looks like in one of our dot diagrams.
