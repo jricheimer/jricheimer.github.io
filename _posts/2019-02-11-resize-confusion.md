@@ -128,4 +128,3 @@ I've seen a lot of confusion about this scattered around online and in github is
 [1]: https://arxiv.org/abs/1802.02611
 [2]: https://distill.pub/2016/deconv-checkerboard/
 [3]: https://github.com/tensorflow/tensorflow/issues/6720#issuecomment-298190596
-[4]: 
