@@ -41,7 +41,7 @@ padding mode in Tensorflow so we can control the output to be of size `(128,128)
 for the dimensionality of the features at the end of the network. And let's say the filter size is `(3, 3)`.
 What does Tensorflow do in this case?
 
-As the [documentation][1] specifies, in a case like this where the input size is divisible by the stride (`128 mod 2 = 0`),
+As the [documentation][1] specifies, in a case like this where the input size is divisible by the stride (`256 mod 2 = 0`),
 only a padding of `k - s` is necessary, where `k` is the filter size and `s` is the stride. Here, that means that a padding of
 `3 - 2 = 1` is needed. That means the image will be padded to be size `(257, 257)`. Elsewhere in the docs, it notes that when the
 padding number is odd, like it is in our case, more zeros will be added to the end (i.e. the bottom and the right) than to the beginning
