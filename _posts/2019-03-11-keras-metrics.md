@@ -5,7 +5,7 @@ date:       2019-03-11 17:00:00
 author:     Jacob Richeimer
 summary:    Adding metric tensors to a Keras model
 categories: keras
-thumbnail:  line-chart
+thumbnail:  wrench
 tags:
  - keras
 ---
