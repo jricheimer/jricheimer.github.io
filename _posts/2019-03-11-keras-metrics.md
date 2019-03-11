@@ -52,7 +52,7 @@ class MyLoss(weights=[0.5, 0.5]):
     
 my_loss = MyLoss()
 model.compile(loss=my_loss.loss_function, optimizer='sgd')
-add_metric(model, my_loss.get_loss_tensors(), names=['bce_loss', 'mse_loss']
+add_metric(model, my_loss.get_loss_tensors(), names=['bce_loss', 'mse_loss'])
 model.fit(...)
 ```
 
