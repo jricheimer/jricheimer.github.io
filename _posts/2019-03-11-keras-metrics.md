@@ -1,13 +1,14 @@
 ---
-layout:     post
-title:      Adding Metrics in Keras
-date:       2019-03-11 17:00:00
-author:     Jacob Richeimer
-summary:    Adding metric tensors to a Keras model
+layout:     post
+title:      Adding Metrics in Keras
+date:       2019-03-11 17:00:10
+author:     Jacob Richeimer
+summary:    Adding metric tensors to a Keras model
 categories: keras
 thumbnail:  line-chart
 tags:
  - keras
+ - metric
 ---
 
 Usually, when training a model, you want to always be able to see what the loss is, so you can have a general idea of how well it's doing. Often times, though, there are other values besides for the loss that you'd also like to keep an eye on throughout the training process. A typical example would be, for a standard classification model, to keep track of the prediction accuracy of the model.
