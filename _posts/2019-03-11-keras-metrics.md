@@ -5,7 +5,7 @@ date:       2019-03-11 17:00:00
 author:     Jacob Richeimer
 summary:    Adding metric tensors to a Keras model
 categories: keras
-thumbnail:  wrench
+thumbnail:  line-chart
 tags:
  - keras
 ---
@@ -14,7 +14,7 @@ Usually, when training a model, you want to always be able to see what the loss 
 
 For this purpose, Keras provides the ability to add ["metrics"][1] to a model. The idea is pretty simple. It's the same as a loss in that it's computed at every step within the model's graph, and in that it's displayed to the user throughout the training process, but it in no way affects the actual training of the model like the loss obviously does. Because of the metrics' parallels to the losses, they must be provided to the model just like losses, as functions that take as arguments the outputs of the network and the ground-truth labels and output some (scalar) value.
 
-However, for both losses and for metrics as well, not always can they be easily expressed as functions of outputs and targets. Sometimes it's useful to have the network minimize (partially), or be able to track, some arbitrary tensor that doesn't necessarily depend on the network outputs or on the ground-truth labels. When it comes to losses, Keras somewhat solved this issue by allowing tensors within the graph to be added to layers or models via the `add_loss` function. [Losses that are dependent only on layer weights can also be utilized through Keras's regularizers.] But it has not (yet) provided this ability for metrics.
+However, for both losses and for metrics as well, not always can they be easily expressed as functions of outputs and targets. Sometimes it's useful to have the network minimize (partially), or be able to track, some arbitrary tensor that doesn't necessarily depend on the network outputs or on the ground-truth labels. When it comes to losses, Keras somewhat solved this issue by allowing tensors within the graph to be added to layers or models via the `add_loss` function. (Losses that are dependent only on layer weights can also be utilized through Keras's regularizers.) But it has not (yet) provided this ability for metrics.
 
 The following simple function, which I have found useful on several occasions, allows any Keras tensor to be added to the metrics of a particular model.
 
